@@ -25,7 +25,6 @@ typedef struct	s_game
 	int			h;
 	int			apple_x;
 	int			apple_y;
-	int			apple_eat;
 
 	t_node		*snake;
 	t_node		*head;
