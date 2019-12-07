@@ -9,20 +9,23 @@ void		draw(int map[WIDTH][HEIGHT], int clear)
 		for (int j = 0; j < WIDTH; j++)
 		{
 			printf("%d ", map[j][i]);
-			/*
-			ft_putstr(ft_itoa(map[j][i]));
-			//ft_putnbr(map[j][i]);
-			ft_putchar(' ');
-			if (map[j][i] < 10)
-				ft_putchar(' ');
-			*/
 		}
 		printf("\n");
-		//ft_putchar('\n');
 	}
-	printf("\n");
-	//ft_putchar('\n');
-	//exit(0);
+}
+
+void		draw_hamiltonian_cycle(t_node cycle[WIDTH][HEIGHT], int clear)
+{
+	if (clear)
+		system("clear");
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			printf("%d ", cycle[j][i].index);
+		}
+		printf("\n");
+	}
 }
 
 int			generate_apple(t_game *game)
@@ -86,7 +89,7 @@ int			game_loop(t_game *game)
 	while (!win && !lose)
 	{
 		sleep(1);
-		game->head->dir = algo(game->head, game->snake);
+		game->head->dir = algo(game, game->head, game->snake);
 		printf("Dir = %d\n", game->head->dir);
 		exit(0);
 

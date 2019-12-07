@@ -68,6 +68,7 @@ int	main()
 	//game.h = HEIGHT;
 	if (init_snake(&game) || init_map(&game))
 		return (1);
+	init_hamiltonian_cycle(&game, &(game.cycle), game.snake, game.head);
 
 	game.apple_x = 1;
 	game.apple_y = 1;

@@ -28,7 +28,7 @@ typedef struct	s_node
 typedef struct	s_hamiltonian
 {
 	int			exist;
-	t_node		*cycle_tab[WIDTH][HEIGHT];
+	t_node		cycle_tab[WIDTH][HEIGHT];
 	t_node		*cycle_lst;
 	int			i;
 	//int			first_x;
@@ -45,16 +45,17 @@ typedef struct	s_game
 	t_node		*snake;
 	t_node		*head;
 	int			map[WIDTH][HEIGHT];
-	t_cycle		cycle;
+	t_hamiltonian	cycle;
 }				t_game;
 
-void			init_hamiltonian_cycle(t_game *game);
+void			init_hamiltonian_cycle(t_hamiltonian *cycle, t_node *snake, t_node *head);
 void			draw(int map[WIDTH][HEIGHT], int clear);
+void			draw_hamiltonian_cycle(t_node map[WIDTH][HEIGHT], int clear);
 
 int				game_loop(t_game *game);
 int				generate_apple(t_game *game);
 void			add_node(t_node **lst, int x, int y);
 
-int				algo(t_node *head, t_node *snake);
+int				algo(t_game *game, t_node *head, t_node *snake);
 
 #endif
