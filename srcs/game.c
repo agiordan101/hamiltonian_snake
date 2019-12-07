@@ -1,14 +1,28 @@
 #include "snake.h"
 
-static void	draw(t_game *game)
+void		draw(int map[WIDTH][HEIGHT], int clear)
 {
-	system("clear");
+	if (clear)
+		system("clear");
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
-			ft_putchar(game->map[j][i] + '0');
-		ft_putchar('\n');
+		{
+			printf("%d ", map[j][i]);
+			/*
+			ft_putstr(ft_itoa(map[j][i]));
+			//ft_putnbr(map[j][i]);
+			ft_putchar(' ');
+			if (map[j][i] < 10)
+				ft_putchar(' ');
+			*/
+		}
+		printf("\n");
+		//ft_putchar('\n');
 	}
+	printf("\n");
+	//ft_putchar('\n');
+	//exit(0);
 }
 
 int			generate_apple(t_game *game)
@@ -46,10 +60,7 @@ static int	move(t_game *game, t_node *head, t_node *snake)
 		game->map[head->x + vx][head->y + vy] == 1)
 		return (1);
 	if (game->map[head->x + vx][head->y + vy] == 2)
-	{
 		add_node(&(game->snake), game->snake->x, game->snake->y);
-		snake = snake->next;
-	}
 	else
 		game->map[snake->x][snake->y] = 0;
 	while (snake->next)
@@ -64,20 +75,25 @@ static int	move(t_game *game, t_node *head, t_node *snake)
 	return (0);
 }
 
+//Bouger le cycle en meme temps que le snake ou sur la pomme
+
 int			game_loop(t_game *game)
 {
 	int		win = 0;
 	int		lose = 0;
 
-	draw(game);
+	draw(game->map, 0);
 	while (!win && !lose)
 	{
 		sleep(1);
-		game->head->dir = algo(game, game->head, game->snake);
+		game->head->dir = algo(game->head, game->snake);
+		printf("Dir = %d\n", game->head->dir);
+		exit(0);
+
 		lose = move(game, game->head, game->snake);
 		if (game->head->x == game->apple_x && game->head->y == game->apple_y)
 			win = generate_apple(game);
-		draw(game);
+		//draw(game->map, 0);
 	}
 	if (lose)
 	{

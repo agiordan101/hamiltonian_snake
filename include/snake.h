@@ -7,8 +7,14 @@
 # include "unistd.h"
 # include "time.h"
 
-#define WIDTH	10
-#define HEIGHT	10
+#define WIDTH	4
+#define HEIGHT	4
+
+typedef struct	s_coord
+{
+	int			x;
+	int			y;
+}				t_coord;
 
 typedef struct	s_node
 {
@@ -18,6 +24,16 @@ typedef struct	s_node
 	int			dir;
 	struct s_node	*next;
 }				t_node;
+
+typedef struct	s_hamiltonian
+{
+	int			exist;
+	t_node		*cycle_tab[WIDTH][HEIGHT];
+	t_node		*cycle_lst;
+	int			i;
+	//int			first_x;
+	//int			first_y;
+}				t_hamiltonian;
 
 typedef struct	s_game
 {
@@ -29,12 +45,16 @@ typedef struct	s_game
 	t_node		*snake;
 	t_node		*head;
 	int			map[WIDTH][HEIGHT];
+	t_cycle		cycle;
 }				t_game;
+
+void			init_hamiltonian_cycle(t_game *game);
+void			draw(int map[WIDTH][HEIGHT], int clear);
 
 int				game_loop(t_game *game);
 int				generate_apple(t_game *game);
 void			add_node(t_node **lst, int x, int y);
 
-int				algo(t_game *game, t_node *head, t_node *snake);
+int				algo(t_node *head, t_node *snake);
 
 #endif

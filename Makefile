@@ -1,9 +1,10 @@
 NAME = snake
 
 SRCS_PATH = srcs
-SRCS_FILES =	main.c \
-				game.c \
-				algo.c
+SRCS_FILES =	main.c\
+				game.c\
+				algo.c\
+				hamiltonian_cycle.c
 SRCS = $(addprefix $(SRCS_PATH)/, $(SRCS_FILES))
 
 OBJS_PATH = objs

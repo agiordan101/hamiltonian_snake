@@ -9,7 +9,7 @@ void			add_node(t_node **lst, int x, int y)
 	node->x = x;
 	node->y = y;
 	node->index = *lst ? (*lst)->index + 1 : 0;
-	node->dir = 0;
+	node->dir = 3;
 	node->next = *lst;
 	*lst = node;
 //	t_node		*tmp;
@@ -34,11 +34,15 @@ static int		init_map(t_game *game)
 {
 	t_node		*node;
 
-	ft_bzero(game->map, sizeof(int) * HEIGHT * WIDTH);
+	for (int i = 0; i < WIDTH; i++)
+		for (int j = 0; j < HEIGHT; j++)
+			game->map[i][j] = 0;
+	//ft_bzero(game->map[i], sizeof(int) * HEIGHT);
 	node = game->snake;
 	while (node)
 	{
 		game->map[node->x][node->y] = 1;
+		printf("Snake init : %d %d\n", node->x, node->y);
 		node = node->next;
 	}
 	//generate_apple(game);
@@ -60,13 +64,13 @@ int	main()
 	t_game	game;
 
 	printf("Snake\n");
-	game.w = WIDTH;
-	game.h = HEIGHT;
+	//game.w = WIDTH;
+	//game.h = HEIGHT;
 	if (init_snake(&game) || init_map(&game))
 		return (1);
 
-	game.apple_x = 8;
-	game.apple_y = 5;
+	game.apple_x = 1;
+	game.apple_y = 1;
 	game.map[game.apple_x][game.apple_y] = 2;
 
 	game_loop(&game);
