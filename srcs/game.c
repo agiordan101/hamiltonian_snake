@@ -4,6 +4,7 @@ void		draw(int map[WIDTH][HEIGHT], int clear)
 {
 	if (clear)
 		system("clear");
+	printf("Map ->\n");
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
@@ -18,6 +19,7 @@ void		draw_hamiltonian_cycle(t_node cycle[WIDTH][HEIGHT], int clear)
 {
 	if (clear)
 		system("clear");
+	printf("Hamiltonian cycle ->\n");
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
@@ -66,8 +68,10 @@ static int	move(t_game *game, t_node *head, t_node *snake)
 		add_node(&(game->snake), game->snake->x, game->snake->y);
 	else
 		game->map[snake->x][snake->y] = 0;
+
 	while (snake->next)
 	{
+		//printf("snake : %p\n", snake);
 		snake->x = snake->next->x;
 		snake->y = snake->next->y;
 		snake = snake->next;
@@ -85,13 +89,15 @@ int			game_loop(t_game *game)
 	int		win = 0;
 	int		lose = 0;
 
-	draw(game->map, 0);
 	while (!win && !lose)
 	{
-		sleep(1);
+		draw(game->map, 1);
+		for (int i = 0; i < 200000000; i++);
+		//sleep(1);
+		//printf("Algo ->\n");
 		game->head->dir = algo(game, game->head, game->snake);
-		printf("Dir = %d\n", game->head->dir);
-		exit(0);
+		//printf("Dir = %d\n", game->head->dir);
+		//exit(0);
 
 		lose = move(game, game->head, game->snake);
 		if (game->head->x == game->apple_x && game->head->y == game->apple_y)

@@ -7,8 +7,8 @@
 # include "unistd.h"
 # include "time.h"
 
-#define WIDTH	4
-#define HEIGHT	4
+#define WIDTH	6
+#define HEIGHT	6
 
 typedef struct	s_coord
 {
@@ -28,8 +28,8 @@ typedef struct	s_node
 typedef struct	s_hamiltonian
 {
 	int			exist;
-	t_node		cycle_tab[WIDTH][HEIGHT];
-	t_node		*cycle_lst;
+	t_node		cycle_tab[WIDTH][HEIGHT];	//Tab avec le numero dans le cycle
+	//t_node		*cycle_lst;					//Cycle avec les coords de la case
 	int			i;
 	//int			first_x;
 	//int			first_y;

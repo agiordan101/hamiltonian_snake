@@ -8,7 +8,7 @@ void			add_node(t_node **lst, int x, int y)
 		return ;
 	node->x = x;
 	node->y = y;
-	node->index = *lst ? (*lst)->index + 1 : 0;
+	node->index = *lst ? (*lst)->index + 1 : 1;
 	node->dir = 3;
 	node->next = *lst;
 	*lst = node;
@@ -55,7 +55,8 @@ static int		init_snake(t_game *game)
 	add_node(&(game->snake), WIDTH / 2, HEIGHT / 2);
 	game->head = game->snake;
 	add_node(&(game->snake), WIDTH / 2 - 1, HEIGHT / 2);
-	add_node(&(game->snake), WIDTH / 2 - 2, HEIGHT / 2);	
+	add_node(&(game->snake), WIDTH / 2 - 2, HEIGHT / 2);
+	//printf("Snake : %p %p %p\n", game->snake, game->snake->next, game->snake->next->next);
 	return (0);
 }
 
@@ -68,7 +69,7 @@ int	main()
 	//game.h = HEIGHT;
 	if (init_snake(&game) || init_map(&game))
 		return (1);
-	init_hamiltonian_cycle(&game, &(game.cycle), game.snake, game.head);
+	init_hamiltonian_cycle(&(game.cycle), game.snake, game.head);
 
 	game.apple_x = 1;
 	game.apple_y = 1;
