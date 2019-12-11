@@ -1,10 +1,15 @@
 #include "snake.h"
 
+//static int		last_chance(t_game *game, t_hamiltonian *cycle, t_node *head, t_node *snake)
+//{
+//}
+
 static int		is_a_choice(t_game *game, int x, int y)
 {
 	if (x == -1 || x == WIDTH ||\
 		y == -1 || y == HEIGHT ||\
-		game->map[x][y] == 1)
+		(game->map[x][y] == 1 &&\
+		 &(game->cycle.cycle_tab[x][y]) != game->snake))	//Le dernier membre est a 1 mais est un choix possible !
 		return (0);
 	/*
 	while (snake->next->next)								//avance jusqua la nuque (avant head)
@@ -89,7 +94,7 @@ static t_node		*find_member(t_game *game, t_hamiltonian *cycle, t_node *new_head
 	}
 	(*n_member)++;
 	*dist_member = dist_in_cycle(cycle, new_head->x, new_head->y, tmp->x, tmp->y);
-	//printf("Find member %d %d index cycle %d\tdist %d\n", tmp->x, tmp->y, tmp->index, *dist_member);
+	printf("Find new member %d %d index cycle %d\tdist %d\n", tmp->x, tmp->y, tmp->index, *dist_member);
 	member = game->snake;
 	while (member->x != tmp->x || member->y != tmp->y)
 		member = member->next;
@@ -116,15 +121,15 @@ static int		crash_snake(t_game *game, t_hamiltonian *cycle, t_node *head, t_node
 	member = find_member(game, cycle, new_head, &n_member, &dist_member);			//Trouve le membre du corps le plus proche
 	while (dist_member < snake->index)						//Tant que la distance jusquau membre est plus petite que le snake
 	{
-		//printf("Dist member %d snake len %d member index %d\n", dist_member, snake->index, member->index);
+		printf("Dist member %d, snake len %d, member index %d\n", dist_member, snake->index, member->index);
 		member = find_member(game, cycle, new_head, &n_member, &dist_member);		//Trouve la prochaine collision a chaque fois
-		if (dist_member <= snake->index - member->index)			//Si la dist pour y aller est plus petite que le nbr
+		if (dist_member <= snake->index - member->index + 1)			//Si la dist pour y aller est plus petite que le nbr de membre jusqua la queue
 		{
-			//printf("Crash ! dist %d  len snake %dmember index %d\n", dist_member, snake->index, member->index);
+			printf("Crash ! dist %d, len snake %d, member index %d\n", dist_member, snake->index, member->index);
 			return (1);										//de tour pour que la queue s'en aille alors collision
 		}
 	}
-	//printf("Crash pas\n");
+	printf("Crash pas dir %d, dist %d,  snake len %d, member index %d\n", dir, dist_member, snake->index, member->index);
 	return (0);
 }
 
@@ -148,5 +153,17 @@ int			algo(t_game *game, t_node *head, t_node *snake)
 	else
 		return (dir);
 	//printf("3eme solution\n");
-	return (best_way(game, &(game->cycle), head, search));	//Si les 2 meilleurs ne marche pas prend le plus long
+	dir = best_way(game, &(game->cycle), head, search);	//Si les 2 meilleurs ne marche pas prend le plus long
+	if (crash_snake(game, &(game->cycle), head, snake, dir))
+	{
+		//Faire des bails de nouveaux hamiltonian path
+		//Le suivant si il est vide
+		//Sinon un autre aleat
+		//return (last_chance(game, &(game->cycle), head, snake);
+		printf("I can't win, I give up\n");
+		exit(0);
+		return (dir);
+	}
+	else
+		return (dir);
 }

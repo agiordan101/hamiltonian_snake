@@ -45,7 +45,7 @@ static int		init_map(t_game *game)
 		printf("Snake init : %d %d\n", node->x, node->y);
 		node = node->next;
 	}
-	//generate_apple(game);
+	generate_apple(game);
 	return (0);
 }
 
@@ -70,11 +70,6 @@ int	main()
 	if (init_snake(&game) || init_map(&game))
 		return (1);
 	init_hamiltonian_cycle(&(game.cycle), game.snake, game.head);
-
-	game.apple_x = 1;
-	game.apple_y = 1;
-	game.map[game.apple_x][game.apple_y] = 2;
-
 	game_loop(&game);
 	return (0);
 }
