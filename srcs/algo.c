@@ -167,3 +167,4 @@ int			algo(t_game *game, t_node *head, t_node *snake)
 	else
 		return (dir);
 }
+//Attention si il ny as plus de place je sg fault ???
