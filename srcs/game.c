@@ -92,7 +92,7 @@ int			game_loop(t_game *game)
 	while (!win && !lose)
 	{
 		draw(game->map, 1);
-		//for (int i = 0; i < 60000000; i++);
+		for (int i = 0; i < 150000000; i++);
 		//sleep(1);
 		//printf("Algo ->\n");
 		game->head->dir = algo(game, game->head, game->snake);

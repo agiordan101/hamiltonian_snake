@@ -36,6 +36,7 @@ static int	best_way(t_game *game, t_hamiltonian *cycle, t_node *head, int search
 
 	//printf("Lest find best way...\n");
 	best_choice = -1;
+	choice = 0;
 	if (search[0] &&\
 		is_a_choice(game, head->x, head->y - 1))
 	{
@@ -74,27 +75,27 @@ static int	best_way(t_game *game, t_hamiltonian *cycle, t_node *head, int search
 	return (choice);
 }
 
-static t_node		*find_member(t_game *game, t_hamiltonian *cycle, t_node *new_head, int *n_member, int *dist_member)
+static t_node		*find_member(t_game *game, t_hamiltonian *cycle, t_node *new_head, int *n_find, int *dist_member)
 {
 	t_node		*member;
 	t_node		*tmp;					//Node qui parcourt le cycle
-	int			count = 0;
+	int			count_find = 0;
 
-	//printf("Lets find new member (already %d)\n", *n_member);	
+	//printf("Lets find new member (already %d)\n", *n_find);	
 	tmp = cycle->cycle_tab[new_head->x][new_head->y].next;
 	//printf("Debut : %d, %d %d\n", tmp->index, tmp->x, tmp->y);
 	if (game->map[tmp->x][tmp->y] == 1)
-		count++;
-	while (count <= *n_member)
+		count_find++;
+	while (count_find <= *n_find)			//count_find = n_find = 0 au debut
 	{
 		tmp = tmp->next;
 		if (game->map[tmp->x][tmp->y] == 1)
-			count++;
+			count_find++;
 		//printf("Node x y %d %d - > %d\n", tmp->x, tmp->y, game->map[tmp->x][tmp->y]);
 	}
-	(*n_member)++;
+	(*n_find)++;
 	*dist_member = dist_in_cycle(cycle, new_head->x, new_head->y, tmp->x, tmp->y);
-	printf("Find new member %d %d index cycle %d\tdist %d\n", tmp->x, tmp->y, tmp->index, *dist_member);
+	//printf("Find new member %d %d index cycle %d\tdist %d\n", tmp->x, tmp->y, tmp->index, *dist_member);
 	member = game->snake;
 	while (member->x != tmp->x || member->y != tmp->y)
 		member = member->next;
@@ -105,11 +106,11 @@ static int		crash_snake(t_game *game, t_hamiltonian *cycle, t_node *head, t_node
 {
 	t_node	*member;
 	t_node	*new_head;
-	int		n_member = 0;
+	int		n_find = 0;
 	int		dist_member;
 
 	//printf("Debut crash snake\n");
-	if (dir == 1)
+	if (dir == 1)											//
 		new_head = &(cycle->cycle_tab[head->x][head->y - 1]);
 	else if (dir == 2)
 		new_head = &(cycle->cycle_tab[head->x - 1][head->y]);
@@ -121,7 +122,7 @@ static int		crash_snake(t_game *game, t_hamiltonian *cycle, t_node *head, t_node
 	member = find_member(game, cycle, new_head, &n_member, &dist_member);			//Trouve le membre du corps le plus proche
 	while (dist_member < snake->index)						//Tant que la distance jusquau membre est plus petite que le snake
 	{
-		printf("Dist member %d, snake len %d, member index %d\n", dist_member, snake->index, member->index);
+		//printf("Dist member %d, snake len %d, member index %d\n", dist_member, snake->index, member->index);
 		member = find_member(game, cycle, new_head, &n_member, &dist_member);		//Trouve la prochaine collision a chaque fois
 		if (dist_member <= snake->index - member->index + 1)			//Si la dist pour y aller est plus petite que le nbr de membre jusqua la queue
 		{
