@@ -12,22 +12,6 @@ void			add_node(t_node **lst, int x, int y)
 	node->dir = 3;
 	node->next = *lst;
 	*lst = node;
-//	t_node		*tmp;
-
-//	tmp = *lst;
-//	if (!tmp)
-//	{
-//		node->index = 0;
-//		*lst = node;
-//	}
-//	else
-//	{
-//		while (tmp->next)
-//			tmp = tmp->next;
-//		node->index = tmp->index + 1;
-//		tmp->next = node;
-//	}
-//	node->next = NULL;
 }
 
 static int		init_map(t_game *game)
@@ -69,7 +53,9 @@ int	main()
 	//game.h = HEIGHT;
 	if (init_snake(&game) || init_map(&game))
 		return (1);
-	init_hamiltonian_cycle(&(game.cycle), game.snake, game.head);
-	game_loop(&game);
+	if (init_hamiltonian_cycle(&(game.cycle), game.snake, game.head))
+		game_loop(&game);
+	else
+		printf("Can't find an hamiltonian_cycle");
 	return (0);
 }
