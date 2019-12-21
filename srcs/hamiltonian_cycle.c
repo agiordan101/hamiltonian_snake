@@ -64,17 +64,18 @@ static int				backtracking(t_hamiltonian *cycle, t_node *node, int x, int y, int
 	return (0);
 }
 
-void			init_hamiltonian_cycle(t_hamiltonian *cycle, t_node *snake, t_node *head)
+int				init_hamiltonian_cycle(t_hamiltonian *cycle, t_node *snake, t_node *head)
 {
 	t_node		*tmp;
 
-	//printf("Snake->next : %p\n", snake->next);
+	printf("WH %d %d\n", WIDTH, HEIGHT);
 	for (int i = 0; i < WIDTH; i++)
 		for (int j = 0; j < HEIGHT; j++)
 		{
 			cycle->cycle_tab[i][j].index = 0;
 			cycle->cycle_tab[i][j].x = i;
 			cycle->cycle_tab[i][j].y = j;
+			printf("Init case %d %d\n", i, j);
 		}
 	//ft_bzero(cycle.cycle[i], sizeof(int) * HEIGHT);
 	cycle->i = 1;
@@ -112,5 +113,5 @@ void			init_hamiltonian_cycle(t_hamiltonian *cycle, t_node *snake, t_node *head)
 		draw_hamiltonian_cycle(cycle->cycle_tab, 0);
 	else
 		printf("Existe pas ...\n");	
-
+	return (cycle->exist ? 1 : 0);
 }
