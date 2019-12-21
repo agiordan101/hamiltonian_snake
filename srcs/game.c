@@ -19,12 +19,14 @@ void		draw_hamiltonian_cycle(t_node cycle[WIDTH][HEIGHT], int clear)
 {
 	if (clear)
 		system("clear");
+	//printf("%p\n", &(cycle[1][1]));
 	printf("Hamiltonian cycle -> %d %d\n", WIDTH, HEIGHT);
 	for (int i = 0; i < HEIGHT; i++)
 	{
 		for (int j = 0; j < WIDTH; j++)
 		{
-			printf("%d ", cycle[j][i].index);
+			printf("%d%c%c ", cycle[j][i].index,	cycle[j][i].index < 10 ? ' ' : '\0',\
+													cycle[j][i].index < 100 ? ' ' : '\0');
 		}
 		printf("\n");
 	}
@@ -56,8 +58,8 @@ int			generate_apple(t_game *game)
 
 static int	move(t_game *game, t_node *head, t_node *snake)
 {
-	int		vx = (head->dir == 2 ? -1 : 0) + (head->dir == 3 ? 1 : 0);
-	int		vy = (head->dir == 1 ? -1 : 0) + (head->dir == 4 ? 1 : 0);
+	int		vx = (head->dir == 1 ? -1 : 0) + (head->dir == 2 ? 1 : 0);
+	int		vy = (head->dir == 0 ? -1 : 0) + (head->dir == 3 ? 1 : 0);
 
 	//printf("v %d %d -- %d\n", vx, vy, head->dir);
 	if (head->x + vx == -1 || head->x + vx == WIDTH ||\
@@ -91,8 +93,9 @@ int			game_loop(t_game *game)
 
 	while (!win && !lose)
 	{
-		draw(game->map, 1);
-		for (int i = 0; i < 150000000; i++);
+		draw(game->map, 0);
+		draw_hamiltonian_cycle(game->cycle.cycle_tab, 0);
+		//for (int i = 0; i < 5000000; i++);
 		//sleep(1);
 		//printf("Algo ->\n");
 		game->head->dir = algo(game, game->head, game->snake);
@@ -104,9 +107,10 @@ int			game_loop(t_game *game)
 			win = generate_apple(game);
 		//draw(game->map, 0);
 	}
+  draw(game->map, 0);
 	if (lose)
-		printf("LOSE - Score : %d/%d", game->snake->index + 1, WIDTH * HEIGHT);
+		printf("LOSE - Score : %d%%\n", (int)(100 * (float)(game->snake->index) / (WIDTH * HEIGHT)));
 	else
-		ft_putendl("BRAVO ! Tu as gagne !");
+		printf("BRAVO ! Tu as gagne !\n");
 	return (0);
 }
