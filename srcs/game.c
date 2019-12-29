@@ -1,4 +1,4 @@
-#include "snake.h"
+#include "../include/snake.h"
 
 void		draw(int map[WIDTH][HEIGHT], int clear)
 {
@@ -13,6 +13,27 @@ void		draw(int map[WIDTH][HEIGHT], int clear)
 		}
 		printf("\n");
 	}
+}
+
+void		draw_color(int map[WIDTH][HEIGHT], int clear)
+{
+	if (clear)
+		system("clear");
+	printf("Map ->\n");
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			if (map[j][i] == 0)
+				printf("\033[37;2m#");
+			else if (map[j][i] == 1)
+				printf("\033[0;31m#");
+			else
+				printf("\033[0;32m#");
+		}
+		printf("\n");
+	}
+	printf("\033[0m");
 }
 
 void		draw_hamiltonian_cycle(t_node cycle[WIDTH][HEIGHT], int clear)
@@ -91,11 +112,12 @@ int			game_loop(t_game *game)
 	int		win = 0;
 	int		lose = 0;
 
+	//exit(0);
 	while (!win && !lose)
 	{
-		draw(game->map, 0);
-		draw_hamiltonian_cycle(game->cycle.cycle_tab, 0);
-		//for (int i = 0; i < 5000000; i++);
+		draw_color(game->map, 0);
+		//draw_hamiltonian_cycle(game->cycle.cycle_tab, 0);
+		//for (int i = 0; i < 40000000; i++);
 		//sleep(1);
 		//printf("Algo ->\n");
 		game->head->dir = algo(game, game->head, game->snake);
@@ -107,7 +129,8 @@ int			game_loop(t_game *game)
 			win = generate_apple(game);
 		//draw(game->map, 0);
 	}
-  draw(game->map, 0);
+	draw(game->map, 0);
+	draw_hamiltonian_cycle(game->cycle.cycle_tab, 0);
 	if (lose)
 		printf("LOSE - Score : %d%%\n", (int)(100 * (float)(game->snake->index) / (WIDTH * HEIGHT)));
 	else
