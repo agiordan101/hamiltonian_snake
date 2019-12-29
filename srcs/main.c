@@ -1,4 +1,4 @@
-#include "snake.h"
+#include "../include/snake.h"
 
 void			add_node(t_node **lst, int x, int y)
 {
@@ -53,9 +53,10 @@ int	main()
 	//game.h = HEIGHT;
 	if (init_snake(&game) || init_map(&game))
 		return (1);
+
 	if (init_hamiltonian_cycle(&(game.cycle), game.snake, game.head))
 		game_loop(&game);
 	else
-		printf("Can't find an hamiltonian_cycle");
+		printf("Can't find an hamiltonian_cycle\n");
 	return (0);
 }
