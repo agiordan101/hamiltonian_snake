@@ -1,4 +1,4 @@
-#include "snake.h"
+#include "../include/snake.h"
 
 static int		is_a_choice(t_game *game, int x, int y)
 {
@@ -35,7 +35,7 @@ static int	best_way(t_game *game, t_hamiltonian *cycle, t_node *head, int search
 	{
 		choice = 0;
 		best_dist = dist_in_cycle(cycle, head->x, head->y - 1, game->apple_x, game->apple_y);
-		printf("Choice 0 is a choice, dist : %d\n", best_dist);
+		//printf("Choice 0 is a choice, dist : %d\n", best_dist);
 	}
 	if (search[1] &&\
 		is_a_choice(game, head->x - 1, head->y) &&\
@@ -44,7 +44,7 @@ static int	best_way(t_game *game, t_hamiltonian *cycle, t_node *head, int search
 	{
 		choice = 1;
 		best_dist = tmp;
-		printf("Choice 1 is a choice, dist : %d\n", best_dist);
+		//printf("Choice 1 is a choice, dist : %d\n", best_dist);
 	}
 	if (search[2] &&\
 		is_a_choice(game, head->x + 1, head->y) &&\
@@ -53,7 +53,7 @@ static int	best_way(t_game *game, t_hamiltonian *cycle, t_node *head, int search
 	{
 		choice = 2;
 		best_dist = tmp;
-		printf("Choice 2 is a choice, dist : %d\n", best_dist);
+		//printf("Choice 2 is a choice, dist : %d\n", best_dist);
 	}
 	if (search[3] &&\
 		is_a_choice(game, head->x, head->y + 1) &&\
@@ -62,7 +62,7 @@ static int	best_way(t_game *game, t_hamiltonian *cycle, t_node *head, int search
 	{
 		choice = 3;
 		best_dist = tmp;
-		printf("Choice 3 is a choice, dist : %d\n", best_dist);
+		//printf("Choice 3 is a choice, dist : %d\n", best_dist);
 	}
 	return (choice);
 }
@@ -133,11 +133,11 @@ static int		crash_snake(t_game *game, t_hamiltonian *cycle, t_node *head, t_node
 			(dist_member == snake->index - member->index &&\
 			apple_on_road(game, new_head, cycle->cycle_tab[member->x][member->y].index)))
 		{	
-			printf("Dir %d crash ! Dist member %d, len snake %d, member index %d at %d %d, Apple on road ? %d\n", dir, dist_member, snake->index, member->index, member->x, member->y, apple_on_road(game, new_head, cycle->cycle_tab[member->x][member->y].index));
+			//printf("Dir %d crash ! Dist member %d, len snake %d, member index %d at %d %d, Apple on road ? %d\n", dir, dist_member, snake->index, member->index, member->x, member->y, apple_on_road(game, new_head, cycle->cycle_tab[member->x][member->y].index));
 			return (1);
 		}
 	}
-	printf("Dir %d crash pas\n", dir);
+	//printf("Dir %d crash pas\n", dir);
 	return (0);
 }
 
@@ -148,7 +148,7 @@ int			algo(t_game *game, t_node *head, t_node *snake)
 
 	ft_memset(search, '1', sizeof(int) * 4);
 	search[3 - head->dir] = 0;								//Banni la recherche dans le sens oppose a la dir
-	printf("Sens %d banni car sens inverse\n", 3 - head->dir);
+	//printf("Sens %d banni car sens inverse\n", 3 - head->dir);
 	dir = best_way(game, &(game->cycle), head, search);		//Chope la dir la plus rapide vers la pomme
 	if (crash_snake(game, &(game->cycle), head, snake, dir))				//Si je m'y crasherai banni la recherche dans cette dir
 		search[dir] = 0;
