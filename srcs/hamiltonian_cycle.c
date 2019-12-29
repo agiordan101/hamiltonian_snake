@@ -1,4 +1,4 @@
-#include "snake.h"
+#include "../include/snake.h"
 
 static int				backtracking(t_hamiltonian *cycle, t_node *node, int x, int y, int dir)
 {
@@ -77,7 +77,6 @@ int				init_hamiltonian_cycle(t_hamiltonian *cycle, t_node *snake, t_node *head)
 			cycle->cycle_tab[i][j].y = j;
 			printf("Init case %d %d\n", i, j);
 		}
-	//ft_bzero(cycle.cycle[i], sizeof(int) * HEIGHT);
 	cycle->i = 1;
 	//cycle->cycle_lst = &(cycle->cycle_tab[snake->x][snake->y]); //Commence le cycle part la queue
 	//tmp = cycle->cycle_lst;
