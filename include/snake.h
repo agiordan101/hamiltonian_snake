@@ -10,12 +10,6 @@
 #define WIDTH	6
 #define HEIGHT	6
 
-typedef struct	s_coord
-{
-	int			x;
-	int			y;
-}				t_coord;
-
 typedef struct	s_node
 {
 	int			x;
@@ -48,7 +42,7 @@ typedef struct	s_game
 	t_hamiltonian	cycle;
 }				t_game;
 
-void			init_hamiltonian_cycle(t_hamiltonian *cycle, t_node *snake, t_node *head);
+int			init_hamiltonian_cycle(t_hamiltonian *cycle, t_node *snake, t_node *head);
 void			draw(int map[WIDTH][HEIGHT], int clear);
 void			draw_hamiltonian_cycle(t_node map[WIDTH][HEIGHT], int clear);
 
