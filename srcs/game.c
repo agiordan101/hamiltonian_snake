@@ -117,8 +117,8 @@ int			game_loop(t_game *game)
 	{
 		draw_color(game->map, 0);
 		//draw_hamiltonian_cycle(game->cycle.cycle_tab, 0);
-		//for (int i = 0; i < 40000000; i++);
-		//sleep(1);
+		for (int i = 0; i < 40000000; i++);
+		// sleep(1);
 		//printf("Algo ->\n");
 		game->head->dir = algo(game, game->head, game->snake);
 		//printf("Dir = %d\n", game->head->dir);

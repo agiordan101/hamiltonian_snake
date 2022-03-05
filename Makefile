@@ -12,7 +12,7 @@ OBJS_FILES = $(SRCS_FILES:%.c=%.o)
 OBJS = $(addprefix $(OBJS_PATH)/, $(OBJS_FILES))
 
 CC = gcc
-CFLAGS += -Wall -Werror -Wextra -I./include -I./libft/include 
+CFLAGS += -I./include -I./libft/include 
 
 LIBFT = libft
 LIB = $(LIBFT)/$(LIBFT).a
@@ -25,6 +25,7 @@ $(NAME): $(OBJS)
 
 $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c
 		$(CC) $(CFLAGS) -c $< -o $@
+
 directory:
 	@mkdir $(OBJS_PATH) 2> /dev/null || true
 

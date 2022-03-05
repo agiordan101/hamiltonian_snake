@@ -32,5 +32,6 @@ int	ft_filereplace(char *file, char *target, char *replace)
 		line = ft_strreplace(line, target, replace);
 		ft_putendl_fd(line, fdwr);
 	}
+	(void)tmpline;
 	return (ret == -1 ? 1 : 0);
 }

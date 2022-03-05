@@ -124,7 +124,7 @@ OBJS_FILES = $(SRCS_FILES:.c=.o)
 OBJS = $(addprefix $(OBJS_PATH)/, $(OBJS_FILES))
 
 INCLUDES_PATH = include
-FLAGS = -Werror -Wextra -Wall -I./$(INCLUDES_PATH)
+FLAGS = -I./$(INCLUDES_PATH)
 CC = gcc
 
 all:		$(NAME)
